@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.168
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab03-Word-Guess", "Lab03-Word-Guess\Lab03-Word-Guess.csproj", "{791BBBC9-352E-41AE-BBAD-DF2083AC4DDB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab03-Tests", "Lab03-Tests\Lab03-Tests.csproj", "{C87801CF-AE6A-48CD-9752-692CC6A0318B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{791BBBC9-352E-41AE-BBAD-DF2083AC4DDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{791BBBC9-352E-41AE-BBAD-DF2083AC4DDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{791BBBC9-352E-41AE-BBAD-DF2083AC4DDB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C87801CF-AE6A-48CD-9752-692CC6A0318B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C87801CF-AE6A-48CD-9752-692CC6A0318B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C87801CF-AE6A-48CD-9752-692CC6A0318B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C87801CF-AE6A-48CD-9752-692CC6A0318B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

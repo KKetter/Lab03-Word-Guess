@@ -6,4 +6,12 @@
     <RootNamespace>Lab03_Word_Guess</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Assets\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="xunit" Version="2.4.1" />
+  </ItemGroup>
+
 </Project>

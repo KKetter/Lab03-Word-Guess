@@ -1,5 +1,6 @@
 ﻿using System;
 
+
 namespace Lab03_Word_Guess
 {
     class Program
