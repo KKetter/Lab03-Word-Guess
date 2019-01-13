@@ -5,14 +5,20 @@ namespace Lab03_Word_Guess
 {
     class Program
     {
+        public static string path = "../../../../testfile.txt";
         static void Main(string[] args)
         {
-            string path = "../../../testfile.txt";
-            //CreateFile(path);
-            AppendToFile(path);
-            ReadFile(path);
-            DeleteFile(path);
+            //
+            
+            CreateFile(path);
+            //AppendToFile(path);
+            //ReadFile(path);
+            //DeleteFile(path);
+            // 
             Console.ReadLine();
+            Menu();
+            
+           
 
         }
 
@@ -53,31 +59,27 @@ namespace Lab03_Word_Guess
         }
         static void ReadFile(string path)
         {
-            try
+            using (StreamReader streamReader = new StreamReader(path))
             {
-                string[] lines = File.ReadAllLines(path);
-                for (int i = 0; i < lines.Length; i++)
-                {
-                    Console.WriteLine(lines[i]);
-                }
-                foreach (string line in lines)
-                {
-                    Console.WriteLine(line);
-                }
-            }
-            catch (Exception)
-            {
+                string[] readWords = File.ReadAllLines(path);
 
-                throw;
+                foreach (string readWord in readWords)
+                {
+                    Console.WriteLine(readWord);
+                }
             }
         }
         static void AppendToFile(string path)
         {
+            Console.WriteLine("Enter a word");
+            string userInput = Console.ReadLine();
+
             try
             {
                 using(StreamWriter streamWriter = File.AppendText(path))
                 {
-                    streamWriter.WriteLine("This is a new NEW line to be added");
+                    streamWriter.WriteLine(userInput);
+
                 }
             }
             catch (Exception)
@@ -97,6 +99,39 @@ namespace Lab03_Word_Guess
 
                 throw;
             }
+        }
+
+        private static void Menu()
+        {
+            Console.WriteLine("Hello! Welcome to Word Guess Game");
+            Console.WriteLine("Please select a menu option");
+            Console.WriteLine("1: Play Word Guess Game");
+            Console.WriteLine("2: View the word bank");
+            Console.WriteLine("3: Add a word");
+            Console.WriteLine("4: Delete a word");
+            Console.WriteLine("5: Exit");
+
+            string userInput = Console.ReadLine();
+
+            switch (userInput)
+            {
+                case "1":
+                    //Game();
+                    break;
+                case "2":
+                    ReadFile(path);
+                    break;
+                case "3":
+                    AppendToFile(path);
+                    break;
+                case "4":
+                    Console.WriteLine(": ");
+                    break;
+                case "5":
+                    Console.Clear();
+                    break;
+            }
+
         }
     }
 }
