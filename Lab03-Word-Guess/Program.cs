@@ -5,55 +5,72 @@ namespace Lab03_Word_Guess
 {
     class Program
     {
-        public static string path = "../../../../testfile.txt";
+        public static string guessPath = "../../../../guessFile";
+        public static string path = "../../../../wordFile.txt";
+        public static bool isCorrect = false;
+        public static string guessThisWord;
         static void Main(string[] args)
         {
-            //
-            
-            CreateFile(path);
-            //AppendToFile(path);
-            //ReadFile(path);
-            //DeleteFile(path);
-            // 
-            Console.ReadLine();
+            CreateFile();
             Menu();
-            
-           
+        }
+        public static void Menu()
+        {
+            Console.WriteLine("Hello! Welcome to Word Guess Game");
+            Console.WriteLine("Please select a menu option");
+            Console.WriteLine("1: Play Word Guess Game");
+            Console.WriteLine("2: Admin Menu");
+            Console.WriteLine("3: Exit");
+            string userInput = Console.ReadLine();
+            int pick = PickHandler(userInput);
+
+            switch (pick)
+            {
+                case 1:
+                    CreateFile();
+                    CreatFileGuesses();
+                    Game();
+                    break;
+                case 2:
+                    AdminMenu();
+                    break;
+                case 3:
+                    break;
+                case 0:
+                    Console.WriteLine("" +
+                        "Please enter a valid number");
+                    Menu();
+                    break;
+                default:
+                    break;
+            }
+
 
         }
-
-        static void CreateFile(string path)
+        public static int PickHandler(string userInput)
         {
-            // Using statement
+            int pick;
             try
             {
-                using (StreamWriter streamWriter = new StreamWriter(path))
-                {
-                    try
-                    {
-                        streamWriter.WriteLine("This is a test file");
-                    }
-                    catch (Exception)
-                    {
-                        throw;
-                    }
-                }
+                int check = Convert.ToInt32(userInput);
             }
-            catch (IOException e)
+            catch (FormatException)
             {
-
-                Console.Write(e);
+                pick = 0;
+                return pick;
                 throw;
             }
-            catch (NotSupportedException e)
+            pick = Convert.ToInt32(userInput);
+            return pick;
+        }
+        static void CreateFile()
+        {
+            using (StreamWriter streamWriter = new StreamWriter(path))
             {
-                Console.Write(e);
-                throw;
-            }
-            catch (Exception e)
-            {
-                Console.Write(e);
-                throw;
+                streamWriter.WriteLine("DOG");
+                streamWriter.WriteLine("DUCK");
+                streamWriter.WriteLine("CAT");
+                streamWriter.WriteLine("CHICKEN");
             }
 
         }
@@ -67,7 +84,10 @@ namespace Lab03_Word_Guess
                 {
                     Console.WriteLine(readWord);
                 }
+                Console.ReadLine();
+                //Menu();
             }
+
         }
         static void AppendToFile(string path)
         {
@@ -76,17 +96,19 @@ namespace Lab03_Word_Guess
 
             try
             {
-                using(StreamWriter streamWriter = File.AppendText(path))
+                using (StreamWriter streamWriter = File.AppendText(path))
                 {
                     streamWriter.WriteLine(userInput);
 
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
 
-                throw;
+                Console.WriteLine(e.Message);
             }
+
+            //Menu();
         }
         static void DeleteFile(string path)
         {
@@ -99,39 +121,6 @@ namespace Lab03_Word_Guess
 
                 throw;
             }
-        }
-
-        private static void Menu()
-        {
-            Console.WriteLine("Hello! Welcome to Word Guess Game");
-            Console.WriteLine("Please select a menu option");
-            Console.WriteLine("1: Play Word Guess Game");
-            Console.WriteLine("2: View the word bank");
-            Console.WriteLine("3: Add a word");
-            Console.WriteLine("4: Delete a word");
-            Console.WriteLine("5: Exit");
-
-            string userInput = Console.ReadLine();
-
-            switch (userInput)
-            {
-                case "1":
-                    //Game();
-                    break;
-                case "2":
-                    ReadFile(path);
-                    break;
-                case "3":
-                    AppendToFile(path);
-                    break;
-                case "4":
-                    Console.WriteLine(": ");
-                    break;
-                case "5":
-                    Console.Clear();
-                    break;
-            }
-
         }
     }
 }
