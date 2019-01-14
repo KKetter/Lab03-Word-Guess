@@ -52,7 +52,7 @@ namespace Lab03_Word_Guess
         {
             Console.WriteLine("Welcome to admin functions");
             Console.WriteLine("1. View Word Bank");
-            Console.WriteLine("2. Edit Word Bank");
+            Console.WriteLine("2. Add a word to Word Bank");
             Console.WriteLine("3. Remove a word from Word Bank");
             Console.WriteLine("4. Return to Main Menu");
 
