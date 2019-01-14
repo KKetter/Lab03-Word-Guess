@@ -1,4 +1,4 @@
-DOG
-DUCK
-CAT
-CHICKEN
+Karn
+Tezzeret
+Bolas
+Chandra
