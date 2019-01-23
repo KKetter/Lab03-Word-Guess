@@ -9,7 +9,6 @@ Show Word Bank
 Remove Word Output
 ![Remove Word](https://github.com/KKetter/Lab03-Word-Guess/blob/gameLogic/Lab03-Word-Guess/Assets/removeWord.PNG);
 
-
 Setup: Use a program to initalize a console application.  Main menu allows immediate start of game with the "1" selection.
 Upon game start an existing word in the bank is displayed.  Upon correct letter guess word will fill into correct gaps.
 All guessed letters are displayed, once entire word is spelled game completes. User may also elect to
