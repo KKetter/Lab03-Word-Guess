@@ -3,7 +3,7 @@ using System.IO;
 
 namespace Lab03_Word_Guess
 {
-    class Program
+    public class Program
     {
         public static string guessPath = "../../../../guessFile.txt";
         public static string path = "../../../../wordFile.txt";
@@ -14,7 +14,6 @@ namespace Lab03_Word_Guess
             CreateFile();
             Menu();
         }
-
         public static void Menu()
         {
             Console.WriteLine("Hello! Welcome to Word Guess Game");
@@ -68,7 +67,10 @@ namespace Lab03_Word_Guess
                     AddAWord();
                     break;
                 case 3:
-                    RemoveOneWord();
+                    Console.WriteLine("What word would you like to remove?");
+                    string deletedWord = Console.ReadLine();
+                    RemoveOneWord(deletedWord, path);
+                    ViewWords();
                     break;
                 case 4:
                     Menu();
@@ -77,8 +79,6 @@ namespace Lab03_Word_Guess
                     break;
             }
         }
-
-        // admin menu functions
         /// <summary>
         /// Display all words in the word file
         /// </summary>
@@ -104,31 +104,29 @@ namespace Lab03_Word_Guess
         /// <summary>
         /// prompts user to delete word from bank, checks word against file, deletes and re-writes file w/o selected word
         /// </summary>
-        public static void RemoveOneWord()
+        public static void RemoveOneWord(string deletedWord,string pathway)
         {
-            string[] words = File.ReadAllLines(path);
+            string[] words = File.ReadAllLines(pathway);
             foreach (string word in words)
             {
                 Console.WriteLine(word);
             }
-            Console.WriteLine("What word would you like to remove?");
-            string deletedWord = Console.ReadLine();
             string deletedWordUpper = deletedWord.ToUpper();
             string[] newWords = new string[words.Length];
             for (int i = 0; i < words.Length; i++)
             {
-                if (deletedWord != words[i])
+                if (deletedWordUpper != words[i])
                 {
                     newWords[i] = words[i];
                 }
                 if (newWords == words)
                 {
-                    Console.WriteLine("Not in the word bank!");
-                    AdminMenu();
+                    Console.WriteLine($"{deletedWord} is not in the word bank!");
+                    return;
                 }
             }
-            DeleteFile(path);
-            using (StreamWriter streamWriter = new StreamWriter(path))
+            DeleteFile(pathway);
+            using (StreamWriter streamWriter = new StreamWriter(pathway))
             {
                 foreach (string word in newWords)
                 {
@@ -136,8 +134,6 @@ namespace Lab03_Word_Guess
                 }
             }
             Console.WriteLine("Your word bank is now:");
-            ViewWords();
-            AdminMenu();
         }
         /// <summary>
         /// converts pick strings into integers, contains exception for wrong menu inputs
@@ -160,7 +156,6 @@ namespace Lab03_Word_Guess
             pick = Convert.ToInt32(userInput);
             return pick;
         }
-
         /// <summary>
         /// selects a random word from the words file to begin the game
         /// </summary>
@@ -171,7 +166,14 @@ namespace Lab03_Word_Guess
             {
                 Console.WriteLine(String.Join(' ', WordChecker(guessThisWord)));
                 ReadFile(guessPath);
-                GuessConversion(GuessPrompt(), guessThisWord);
+                try
+                {
+                    GuessConversion(GuessPrompt(), guessThisWord);
+                }
+                catch (Exception)
+                {
+                    isCorrect = false;
+                }
                 Console.WriteLine();
             }
             Console.WriteLine(String.Join(' ', WordChecker(guessThisWord)));
@@ -196,7 +198,7 @@ namespace Lab03_Word_Guess
             return word;
         }
         /// <summary>
-        /// Creates blanks ie word form for guessing, checks guesses against targeted random word, for correct guesses fills in word for correspoding blank
+        /// Creates blanks ie word form for guessing, checks guesses against targeted random word, for correct guesses fills in word for corresponding blank
         /// </summary>
         /// <param name="word"></param>
         /// <returns></returns>
@@ -230,8 +232,8 @@ namespace Lab03_Word_Guess
         /// <summary>
         /// converts guess from string to char and handles conversion exceptions, these guesses are appended to a guess file, lastly value is checked for "correct-ness"
         /// </summary>
-        /// <param name="letterInput"></param>
-        /// <param name="word"></param>
+        /// <param name="letterInput">letter guessed</param>
+        /// <param name="word">word being guessed</param>
         public static void GuessConversion(string letterInput, string word)
         {
             char letter;
@@ -246,7 +248,7 @@ namespace Lab03_Word_Guess
                 {
 
                     Console.WriteLine("Only enter one letter to guess!");
-                    letterInput = GuessPrompt();
+                    throw;
                 }
                 canConvert = true;
             }
@@ -270,7 +272,9 @@ namespace Lab03_Word_Guess
             string choiceStr = choice.ToUpper();
             return choiceStr;
         }
-
+        /// <summary>
+        /// creates a file to hold the users guesses
+        /// </summary>
         public static void CreateFileGuesses()
         {
             using (StreamWriter streamWriter = new StreamWriter(guessPath))
@@ -278,6 +282,9 @@ namespace Lab03_Word_Guess
                 streamWriter.WriteLine("Guesses");
             }
         }
+        /// <summary>
+        /// creates a file
+        /// </summary>
         public static void CreateFile()
         {
             using (StreamWriter streamWriter = new StreamWriter(path))
@@ -289,6 +296,11 @@ namespace Lab03_Word_Guess
             }
 
         }
+        /// <summary>
+        /// method to read all contents at a file path and write them to the screen
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public static string[] ReadFile(string path)
         {
             using (StreamReader streamReader = new StreamReader(path))
@@ -303,6 +315,12 @@ namespace Lab03_Word_Guess
             }
 
         }
+        /// <summary>
+        /// adds string inputs from the console to a file
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public static string[] AppendToFile(string path, string input)
         {
             string inputUpper = input.ToUpper();
@@ -313,7 +331,11 @@ namespace Lab03_Word_Guess
             }
             return ReadFile(path);
         }
-        static void DeleteFile(string path)
+        /// <summary>
+        /// delete a file on a pathway
+        /// </summary>
+        /// <param name="path"></param>
+        public static void DeleteFile(string path)
         {
             try
             {
